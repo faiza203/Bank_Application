@@ -1,7 +1,10 @@
+// Elements
+const loginForm = document.getElementById("login_form")
+const loginEmail = document.getElementById("login_email");
+const loginPassword = document.getElementById("login_password");
+const loginForgetPassword = document.getElementById("login_forget_password");
+const loginSubmitBtn = document.getElementById("login_sumbit_btn");
 const registerPageBtn = document.getElementById("register_page_btn");
-registerPageBtn.addEventListener("click", () => {
-    window.location.href = "register.html";
-});
 
 // Initialize Firebase
 (function () {
@@ -17,4 +20,16 @@ registerPageBtn.addEventListener("click", () => {
     };
     firebase.initializeApp(config);
     firebase.analytics();
-}())
+
+    const auth = firebase.auth();
+    loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        auth.signInWithEmailAndPassword(loginEmail.value, loginPassword.value)
+    })
+
+}());
+
+registerPageBtn.addEventListener("click", () => {
+    window.location.href = "register.html";
+});
+
