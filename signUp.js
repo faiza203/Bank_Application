@@ -22,6 +22,20 @@ const registerSubmitBtn = document.getElementById("register_submit_btn");
     firebase.analytics();
 
     const auth = firebase.auth();
-    
+    registerForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if(registerPassword.value === registerConfirmPassword.value){
+            const promise =  auth.createUserWithEmailAndPassword(registerEmail.value, registerPassword.value)
+            promise.then(function({user}){
+                alert("Login sucessfully");
+            });
+            promise.catch(function(err){
+                 alert(err.message);
+            })
+        }else{
+            alert("Password does not matched")
+        }
+       
+     })
 
 }());
