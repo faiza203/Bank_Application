@@ -2,3 +2,6 @@
     cursor: pointer;
     text-decoration-line: underline;
 }
+#register_confirm_password{
+    max-width: 100%;
+}

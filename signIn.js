@@ -3,7 +3,7 @@ const loginForm = document.getElementById("login_form")
 const loginEmail = document.getElementById("login_email");
 const loginPassword = document.getElementById("login_password");
 const loginForgetPassword = document.getElementById("login_forget_password");
-const loginSubmitBtn = document.getElementById("login_sumbit_btn");
+const loginSubmitBtn = document.getElementById("login_submit_btn");
 const registerPageBtn = document.getElementById("register_page_btn");
 
 // Initialize Firebase

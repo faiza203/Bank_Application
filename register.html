@@ -4,18 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+    <link rel="stylesheet" href="style.css">
     <title>register</title>
 </head>
 
 <body>
     <h1 class="text-center mt-5">Register</h1>
-    <form id="login_form" class="m-3">
+    <form id="register_form" class="m-3">
         <div>
             <label class="col-sm-2 col-form-label col-form-label-lg">Email</label>
-            <input type="email" id="register-email" placeholder="Enter Email here !!!" class="form-control" required />
+            <input type="email" id="register_email" placeholder="Enter Email here !!!" class="form-control" required />
         </div>
         <div>
             <label class="col-sm-2 col-form-label col-form-label-lg">Password</label>
@@ -24,16 +27,15 @@
         </div>
         <div class="mt-3">
 
-            <label class="col-sm-2 col-form-label col-form-label-lg">Confirm Password</label>
-            <input type="password" id="register_confirm_password" placeholder="Rewrite Password here !!!" class="form-control"
-                required />
+            <label class="col-sm-2 col-form-label col-form-label-lg" style="max-width: 100%;">Confirm Password</label>
+            <input type="password" id="register_confirm_password" placeholder="Rewrite Password here !!!"
+                class="form-control" required />
         </div>
         <div class="mt-3">
             <button id="register_submit_btn" type="submit" class="btn btn-outline-danger">Register</button>
         </div>
-        <div class="mt-3">
-        </div>
     </form>
+    <script src="signUp.js"></script>
 </body>
 
 </html>
