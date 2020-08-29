@@ -54,6 +54,7 @@ const registerPageBtn = document.getElementById("register_page_btn");
             })
             .then(() => {
                 stopLoading();
+                window.location.href = "dashboard.html";
             })
             .catch((err) => {
                 alert("Got an error !!!");

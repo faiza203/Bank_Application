@@ -32,6 +32,7 @@ const registerSubmitBtn = document.getElementById("register_submit_btn");
             const promise = auth.createUserWithEmailAndPassword(registerEmail.value, registerPassword.value)
             promise.then(function ({ user }) {
                 alert("Create account sucessfully");
+                window.location.href = "index.html";
                 stopLoading();
             });
             promise.catch(function (err) {
