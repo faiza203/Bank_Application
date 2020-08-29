@@ -6,8 +6,12 @@
     max-width: 100%;
 }
 #loading{
-        display: none;
-        margin-top: 100px;
-        margin-left: 37em;
-        position: fixed;
+    display: none;
+    margin-top: 12rem;
+    margin-left: 44rem;
+    position: fixed;
+}
+.spinner-border{
+    height: 4rem;
+    width: 4rem;
 }

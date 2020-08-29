@@ -1,5 +1,8 @@
 // Elements
-const loginForm = document.getElementById("login_form")
+const loadingDiv = document.getElementById("loading");
+const contentDiv = document.getElementById("content");
+const loginUserName = document.getElementById("login_user_name");
+const loginForm = document.getElementById("login_form");
 const loginEmail = document.getElementById("login_email");
 const loginPassword = document.getElementById("login_password");
 const loginForgetPassword = document.getElementById("login_forget_password");
@@ -22,14 +25,18 @@ const registerPageBtn = document.getElementById("register_page_btn");
     firebase.analytics();
 
     const auth = firebase.auth();
+    const firestore = firebase.firestore();
     loginForm.addEventListener("submit", (e) => {
+        startLoading();
         e.preventDefault();
         const promise = auth.signInWithEmailAndPassword(loginEmail.value, loginPassword.value)
         promise.then(function ({ user }) {
-            alert("Login sucessfully")
+            alert("Login sucessfully");
+            stopLoading();
         });
         promise.catch(function (err) {
-            alert(err.message)
+            alert(err.message);
+            stopLoading();
         })
     })
 
@@ -39,3 +46,11 @@ registerPageBtn.addEventListener("click", () => {
     window.location.href = "register.html";
 });
 
+function startLoading() {
+    loadingDiv.style.display = "block";
+    contentDiv.style.display = "none";
+}
+function stopLoading() {
+    loadingDiv.style.display = "none";
+    contentDiv.style.display = "block";
+}

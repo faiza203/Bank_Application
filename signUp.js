@@ -1,4 +1,7 @@
 // Elements
+const loadingDiv = document.getElementById("loading");
+const contentDiv = document.getElementById("content");
+const registerUserName = document.getElementById("register_user_name");
 const registerForm = document.getElementById("register_form");
 const registerEmail = document.getElementById("register_email");
 const registerPassword = document.getElementById("register_password");
@@ -23,19 +26,29 @@ const registerSubmitBtn = document.getElementById("register_submit_btn");
 
     const auth = firebase.auth();
     registerForm.addEventListener("submit", (e) => {
+        startLoading();
         e.preventDefault();
         if (registerPassword.value === registerConfirmPassword.value) {
             const promise = auth.createUserWithEmailAndPassword(registerEmail.value, registerPassword.value)
             promise.then(function ({ user }) {
                 alert("Login sucessfully");
+                stopLoading();
             });
             promise.catch(function (err) {
                 alert(err.message);
+                stopLoading();
             })
         } else {
             alert("Password does not matched")
         }
-
     })
-
 }());
+
+function startLoading() {
+    loadingDiv.style.display = "block";
+    contentDiv.style.display = "none";
+}
+function stopLoading() {
+    loadingDiv.style.display = "none";
+    contentDiv.style.display = "block";
+}
