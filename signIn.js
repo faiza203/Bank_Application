@@ -24,13 +24,13 @@ const registerPageBtn = document.getElementById("register_page_btn");
     const auth = firebase.auth();
     loginForm.addEventListener("submit", (e) => {
         e.preventDefault();
-       const promise =  auth.signInWithEmailAndPassword(loginEmail.value, loginPassword.value)
-       promise.then(function({user}){
-           alert("Login sucessfully")
-       });
-       promise.catch(function(err){
+        const promise = auth.signInWithEmailAndPassword(loginEmail.value, loginPassword.value)
+        promise.then(function ({ user }) {
+            alert("Login sucessfully")
+        });
+        promise.catch(function (err) {
             alert(err.message)
-       })
+        })
     })
 
 }());

@@ -5,3 +5,9 @@
 #register_confirm_password{
     max-width: 100%;
 }
+#loading{
+        display: none;
+        margin-top: 100px;
+        margin-left: 37em;
+        position: fixed;
+}
