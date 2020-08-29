@@ -14,27 +14,38 @@
 </head>
 
 <body>
-    <h1 class="text-center mt-5">Register</h1>
-    <form id="register_form" class="m-3">
-        <div>
-            <label class="col-sm-2 col-form-label col-form-label-lg">Email</label>
-            <input type="email" id="register_email" placeholder="Enter Email here !!!" class="form-control" required />
-        </div>
-        <div>
-            <label class="col-sm-2 col-form-label col-form-label-lg">Password</label>
-            <input type="password" id="register_password" placeholder="Enter Password here !!!" class="form-control"
-                required />
-        </div>
-        <div class="mt-3">
+    <div id="loading"><div
+        class="spinner-border"
+        style="width: 6rem; height: 6rem;"
+        role="status"
+      >
+        <span class="sr-only">Loading...</span>
+      </div></div>
+    <div id="content">
+        <h1 class="text-center mt-5">Register</h1>
+        <form id="register_form" class="m-3">
+            <div>
+                <label class="col-sm-2 col-form-label col-form-label-lg">Email</label>
+                <input type="email" id="register_email" placeholder="Enter Email here !!!" class="form-control"
+                    required />
+            </div>
+            <div>
+                <label class="col-sm-2 col-form-label col-form-label-lg">Password</label>
+                <input type="password" id="register_password" placeholder="Enter Password here !!!" class="form-control"
+                    required />
+            </div>
+            <div class="mt-3">
 
-            <label class="col-sm-2 col-form-label col-form-label-lg" style="max-width: 100%;">Confirm Password</label>
-            <input type="password" id="register_confirm_password" placeholder="Rewrite Password here !!!"
-                class="form-control" required />
-        </div>
-        <div class="mt-3">
-            <button id="register_submit_btn" type="submit" class="btn btn-outline-danger">Register</button>
-        </div>
-    </form>
+                <label class="col-sm-2 col-form-label col-form-label-lg" style="max-width: 100%;">Confirm
+                    Password</label>
+                <input type="password" id="register_confirm_password" placeholder="Rewrite Password here !!!"
+                    class="form-control" required />
+            </div>
+            <div class="mt-3">
+                <button id="register_submit_btn" type="submit" class="btn btn-outline-danger">Register</button>
+            </div>
+        </form>
+    </div>
     <script src="signUp.js"></script>
 </body>
 
