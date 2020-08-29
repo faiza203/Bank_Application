@@ -31,7 +31,7 @@ const registerSubmitBtn = document.getElementById("register_submit_btn");
         if (registerPassword.value === registerConfirmPassword.value) {
             const promise = auth.createUserWithEmailAndPassword(registerEmail.value, registerPassword.value)
             promise.then(function ({ user }) {
-                alert("Login sucessfully");
+                alert("Create account sucessfully");
                 stopLoading();
             });
             promise.catch(function (err) {

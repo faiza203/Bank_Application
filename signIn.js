@@ -31,14 +31,36 @@ const registerPageBtn = document.getElementById("register_page_btn");
         e.preventDefault();
         const promise = auth.signInWithEmailAndPassword(loginEmail.value, loginPassword.value)
         promise.then(function ({ user }) {
-            alert("Login sucessfully");
+            const userId = { user }.user.u.src.uid;
+            const userInformation = {
+                userName: loginUserName.value,
+                email: loginEmail.value,
+                balance: 0
+            }
+            sendToFirestore(userId, userInformation)
             stopLoading();
+
         });
         promise.catch(function (err) {
             alert(err.message);
             stopLoading();
         })
     })
+    function sendToFirestore(userId, userInformation) {
+        const doc = firestore.doc(`users/${userId}/user Information/${userInformation.userName}`);
+        doc
+            .set({
+                userInformation,
+            })
+            .then(() => {
+                stopLoading();
+            })
+            .catch((err) => {
+                alert("Got an error !!!");
+                console.log(err);
+                stopLoading();
+            });
+    }
 
 }());
 
