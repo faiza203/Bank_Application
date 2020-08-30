@@ -20,8 +20,24 @@
         <h1 class="text-center mt-5 h1">Dashboard</h1>
         <h3 class="m-3 text-center h3" id="bank-banalce-amount">Bank Balance : 0</h3>
         <div id="transcation-history">
-            <h2 class="h2 ml-3">Transcation History</h1>
+            <h2 class="h2 ml-3">Transcation History</h2>
         </div>
+        <div id="add_new_transaction">
+            <h2 class="h2 ml-3">Add Transaction</h2>
+            <form id="add_new_transaction" style="display: none;">
+                <div class="form-group">
+                    <label for="text" class="col-sm-2 col-form-label col-form-label-lg">Add Amount</label>
+                    <input type="number" class="form-control m-2" id="amount" placeholder="Enter amount..." />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-outline-success ml-2" id="addTransaction">Add</button>
+                    <button class="btn btn-outline-danger" id="delTransaction">Del</button>
+                    <button class="btn btn-outline-primary" id="cancleTransaction">Cancle</button>
+                </div>
+        </div>
+
+        </form>
+    </div>
     </div>
 </body>
 
