@@ -28,4 +28,12 @@ addNewTransaction.addEventListener("click", () => {
     };
     firebase.initializeApp(config);
     firebase.analytics();
-}())
+}());
+function startLoading() {
+    loadingDiv.style.display = "block";
+    contentDiv.style.display = "none";
+}
+function stopLoading() {
+    loadingDiv.style.display = "none";
+    contentDiv.style.display = "block";
+}
