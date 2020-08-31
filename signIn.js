@@ -32,6 +32,7 @@ const registerPageBtn = document.getElementById("register_page_btn");
         const promise = auth.signInWithEmailAndPassword(loginEmail.value, loginPassword.value)
         promise.then(function ({ user }) {
             const userId = { user }.user.u.src.uid;
+            localStorage.setItem("userId" , userId)
             const userInformation = {
                 userName: loginUserName.value,
                 email: loginEmail.value,
@@ -77,3 +78,4 @@ function stopLoading() {
     loadingDiv.style.display = "none";
     contentDiv.style.display = "block";
 }
+ 

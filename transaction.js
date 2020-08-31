@@ -9,6 +9,7 @@ const addNewTransactionAmount = document.getElementById("add_new_transaction");
 const addTransaction = document.getElementById("add_transaction");
 const delTransaction = document.getElementById("del_transaction");
 const cancleTransaction = document.getElementById("cancle_transaction");
+const userId = localStorage.getItem("userId");
 
 addNewTransaction.addEventListener("click", () => {
     addNewTransactionForm.style.display = "block";
@@ -28,12 +29,52 @@ addNewTransaction.addEventListener("click", () => {
     };
     firebase.initializeApp(config);
     firebase.analytics();
+    const firestore = firebase.firestore();
+    function fecthHistory() {
+        firestore
+            .collection("users")
+            .doc(`${userId}`)
+            .collection("user Information")
+            .get()
+            .then((querySnapshot) => {
+             querySnapshot.forEach(function (doc) {
+                    console.log(doc.data());
+                });
+            })
+            .catch((err) => {
+                alert(err.message)
+            })
+        // .then((querySnapshot) => {
+        //     querySnapshot.forEach(function (doc) {
+        //         const { balance } = doc.data();
+        //         console.log(balance);
+        //         alert("I am comlpeted");
+        //         stopLoading();
+        //     });
+        // })
+        // .catch((err) => {
+        //     alert("Error in fetching history");
+        //     console.log(err);
+        //     stopLoading();
+        // });
+    }
+    fecthHistory();
 }());
+
+
 function startLoading() {
     loadingDiv.style.display = "block";
     contentDiv.style.display = "none";
 }
+
 function stopLoading() {
     loadingDiv.style.display = "none";
     contentDiv.style.display = "block";
+}
+
+function generateHistoryElements(amount, condition) {
+    const div = document.createElement("div");
+    div.id = userId;
+    div.innerHTML = `<p>${amount}</p> is ${condition}`;
+    transcationHistory.appendChild(div);
 }

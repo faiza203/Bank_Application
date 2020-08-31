@@ -31,8 +31,16 @@ const registerSubmitBtn = document.getElementById("register_submit_btn");
         if (registerPassword.value === registerConfirmPassword.value) {
             const promise = auth.createUserWithEmailAndPassword(registerEmail.value, registerPassword.value)
             promise.then(function ({ user }) {
-                alert("Create account sucessfully");
-                window.location.href = "index.html";
+                const userId = { user }.user.u.src.uid;
+                localStorage.setItem("userId" , userId)
+                const userInformation = {
+                    userName: loginUserName.value,
+                    email: loginEmail.value,
+                    balance: 0
+                }
+                sendToFirestore(userId, userInformation)
+                stopLoading();
+                    window.location.href = "index.html";
                 stopLoading();
             });
             promise.catch(function (err) {
@@ -41,6 +49,7 @@ const registerSubmitBtn = document.getElementById("register_submit_btn");
             })
         } else {
             alert("Password does not matched")
+            stopLoading();
         }
     })
 }());
