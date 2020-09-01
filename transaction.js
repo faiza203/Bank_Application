@@ -11,10 +11,6 @@ const delTransaction = document.getElementById("del_transaction");
 const cancleTransaction = document.getElementById("cancle_transaction");
 const userId = localStorage.getItem("userId");
 
-addNewTransaction.addEventListener("click", () => {
-    addNewTransactionForm.style.display = "block";
-});
-
 // Initialize Firebase
 (function () {
     const config = {
@@ -30,35 +26,33 @@ addNewTransaction.addEventListener("click", () => {
     firebase.initializeApp(config);
     firebase.analytics();
     const firestore = firebase.firestore();
-    function fecthHistory() {
-        firestore
-            .collection("users")
-            .doc(`${userId}`)
-            .collection("user Information")
-            .get()
-            .then((querySnapshot) => {
-             querySnapshot.forEach(function (doc) {
-                    console.log(doc.data());
-                });
-            })
-            .catch((err) => {
-                alert(err.message)
-            })
-        // .then((querySnapshot) => {
-        //     querySnapshot.forEach(function (doc) {
-        //         const { balance } = doc.data();
-        //         console.log(balance);
-        //         alert("I am comlpeted");
-        //         stopLoading();
-        //     });
-        // })
-        // .catch((err) => {
-        //     alert("Error in fetching history");
-        //     console.log(err);
-        //     stopLoading();
-        // });
+    firestore
+        .collection("users")
+        .doc(`${userId}`)
+        .collection("user Information")
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach(function (doc) {
+                const { userInformation } = doc.data();
+                console.log({ userInformation });
+                generateHistoryElements({ userInformation }.userInformation.balance)
+            });
+        })
+        .catch((err) => {
+            alert(err.message)
+        })
+
+    addNewTransaction.addEventListener("click", () => {
+        addNewTransactionForm.style.display = "block";
+        addNewTransactionForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+        })
+    });
+  
+    function updateFireBase(){
+        
     }
-    fecthHistory();
+
 }());
 
 
@@ -72,9 +66,10 @@ function stopLoading() {
     contentDiv.style.display = "block";
 }
 
-function generateHistoryElements(amount, condition) {
+function generateHistoryElements(amount) {
     const div = document.createElement("div");
     div.id = userId;
-    div.innerHTML = `<p>${amount}</p> is ${condition}`;
+    div.innerHTML = `<p class="m-3 p-2 text-center" style="background-image:linear-gradient(to bottom, #dee2e6,#f8f9fa)
+    ">${amount}</p> `;
     transcationHistory.appendChild(div);
 }

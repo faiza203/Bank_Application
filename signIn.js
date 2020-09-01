@@ -36,12 +36,14 @@ const registerPageBtn = document.getElementById("register_page_btn");
             const userInformation = {
                 userName: loginUserName.value,
                 email: loginEmail.value,
-                balance: 0
+                balance : "",
             }
             sendToFirestore(userId, userInformation)
             stopLoading();
 
         });
+
+        
         promise.catch(function (err) {
             alert(err.message);
             stopLoading();
