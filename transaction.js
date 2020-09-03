@@ -43,6 +43,7 @@ addNewTransaction.addEventListener("click", () => {
             querySnapshot.forEach(function (doc) {
                 const { userInformation } = doc.data();
                 localStorage.setItem("alreadyBalance", { userInformation }.userInformation.balance);
+                bankBalanceAmount.innerText = "Bank Balance : " + localStorage.getItem("alreadyBalance");
             });
         })
         .catch((err) => {
@@ -50,11 +51,12 @@ addNewTransaction.addEventListener("click", () => {
         })
 
     addNewTransactionForm.addEventListener("submit", (e) => e.preventDefault());
-    addTransaction.addEventListener("click", updateFireBase);
-    const alreadyBalance = localStorage.getItem("alreadyBalance");
-
-    function updateFireBase() {
+    addTransaction.addEventListener("click", addAmountInFireBase);
+    delTransaction.addEventListener("click", delAmountInFireBase);
+    cancleTransaction.addEventListener("click", () => addNewTransactionForm.style.display = "none");
+    function addAmountInFireBase() {
         const docRef = firestore.doc(`users/${userId}/user Information/${userName}`);
+        const alreadyBalance = localStorage.getItem("alreadyBalance");
         docRef.update({
             userInformation: {
                 name: userName,
@@ -64,16 +66,55 @@ addNewTransaction.addEventListener("click", () => {
         })
             .then(() => {
                 alert("Document Updated in firebase");
-                generateHistoryElements();
+                generateHistoryElements("Deposit Amount");
+                addNewTransactionForm.style.display = "none";
+                localStorage.setItem("alreadyBalance", parseInt(alreadyBalance) + parseInt(addNewTransactionAmount.value));
+                bankBalanceAmount.innerText = "Bank Balance : " + localStorage.getItem("alreadyBalance");
             })
             .catch((err) => {
                 alert("Error in updating amount in firebase");
+                addNewTransactionForm.style.display = "none";
                 console.log(err);
             });
     }
-
+    function delAmountInFireBase() {
+        const docRef = firestore.doc(`users/${userId}/user Information/${userName}`);
+        const alreadyBalance = localStorage.getItem("alreadyBalance");
+        docRef.update({
+            userInformation: {
+                name: userName,
+                email: userEmail,
+                balance: parseInt(alreadyBalance) - parseInt(addNewTransactionAmount.value),
+            }
+        })
+            .then(() => {
+                alert("Document Updated in firebase");
+                generateHistoryElements("Widraw Amount");
+                addNewTransactionForm.style.display = "none";
+                localStorage.setItem("alreadyBalance", parseInt(alreadyBalance) - parseInt(addNewTransactionAmount.value));
+                bankBalanceAmount.innerText = "Bank Balance : " + localStorage.getItem("alreadyBalance");
+            })
+            .catch((err) => {
+                alert("Error in updating amount in firebase");
+                addNewTransactionForm.style.display = "none";
+                console.log(err);
+            });
+    }
 }());
 
+function generateHistoryElements(condition) {
+    const div = document.createElement("div");
+    div.id = uuid;
+    if (condition === "Deposit Amount") {
+        const alreadyBalance = localStorage.getItem("alreadyBalance");
+        div.innerHTML = `<p class="ml-3 font-weight-lighter">Before Transaction : ${alreadyBalance} , After Transaction : ${parseInt(alreadyBalance) + parseInt(addNewTransactionAmount.value)} , ${condition}_ ${addNewTransactionAmount.value} , Time :${new Date()}`;
+        transcationHistory.appendChild(div);
+    } else if (condition === "Widraw Amount") {
+        const alreadyBalance = localStorage.getItem("alreadyBalance");
+        div.innerHTML = `<p class="ml-3 font-weight-lighter">Before Transaction : ${alreadyBalance} , After Transaction : ${parseInt(alreadyBalance) - parseInt(addNewTransactionAmount.value)} , ${condition}_ ${addNewTransactionAmount.value} , Time :${new Date()}`;
+        transcationHistory.appendChild(div)
+    }
+}
 
 function startLoading() {
     loadingDiv.style.display = "block";
@@ -83,11 +124,4 @@ function startLoading() {
 function stopLoading() {
     loadingDiv.style.display = "none";
     contentDiv.style.display = "block";
-}
-
-function generateHistoryElements() {
-    const div = document.createElement("div");
-    div.id = uuid;
-    div.innerHTML = `<p>Before Transaction</p><p id="alreadyBalance">${alreadyBalance}</p><p>After Transaction</p>${parseInt(alreadyBalance + addNewTransactionAmount.value)}<p id="addedAmount">${addNewTransactionAmount.value}</p><p>${new Date()}</p>`;
-    transcationHistory.appendChild(div);
 }
