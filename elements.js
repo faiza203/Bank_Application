@@ -15,29 +15,15 @@ const userName = localStorage.getItem("userName");
 const userEmail = localStorage.getItem("userEmail");
 const historyId = uuid();
 
-cancleTransaction.addEventListener("click",()=>{
+cancleTransaction.addEventListener("click", () => {
 
     addNewTransactionForm.style.display = "none";
 })
 
 addNewTransaction.addEventListener("click", () => {
-    addNewTransactionForm.style.display = "block" ;
+    addNewTransactionForm.style.display = "block";
 });
 
-
-function generateHistoryElements(condition) {
-    const div = document.createElement("div");
-    div.id = uuid;
-    if (condition === "Deposit Amount") {
-        const alreadyBalance = localStorage.getItem("alreadyBalance");
-        div.innerHTML = `<p class="ml-3 font-weight-lighter">Before Transaction : ${alreadyBalance} , After Transaction : ${parseInt(alreadyBalance) + parseInt(addNewTransactionAmount.value)} , ${condition}_ ${addNewTransactionAmount.value} , Time :${new Date()}`;
-        transcationHistory.appendChild(div);
-    } else if (condition === "Widraw Amount") {
-        const alreadyBalance = localStorage.getItem("alreadyBalance");
-        div.innerHTML = `<p class="ml-3 font-weight-lighter">Before Transaction : ${alreadyBalance} , After Transaction : ${parseInt(alreadyBalance) - parseInt(addNewTransactionAmount.value)} , ${condition}_ ${addNewTransactionAmount.value} , Time :${new Date()}`;
-        transcationHistory.appendChild(div)
-    }
-}
 
 function startLoading() {
     loadingDiv.style.display = "block";
