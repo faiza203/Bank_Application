@@ -15,8 +15,13 @@ const userName = localStorage.getItem("userName");
 const userEmail = localStorage.getItem("userEmail");
 const historyId = uuid();
 
+cancleTransaction.addEventListener("click",()=>{
+
+    addNewTransactionForm.style.display = "none";
+})
+
 addNewTransaction.addEventListener("click", () => {
-    addNewTransactionForm.style.display = "block";
+    addNewTransactionForm.style.display = "block" ;
 });
 
 // Initialize Firebase
@@ -48,57 +53,64 @@ addNewTransaction.addEventListener("click", () => {
         })
         .catch((err) => {
             alert(err.message)
-        })
+        });
 
     addNewTransactionForm.addEventListener("submit", (e) => e.preventDefault());
     addTransaction.addEventListener("click", addAmountInFireBase);
     delTransaction.addEventListener("click", delAmountInFireBase);
-    cancleTransaction.addEventListener("click", () => addNewTransactionForm.style.display = "none");
     function addAmountInFireBase() {
-        const docRef = firestore.doc(`users/${userId}/user Information/${userName}`);
-        const alreadyBalance = localStorage.getItem("alreadyBalance");
-        docRef.update({
-            userInformation: {
-                name: userName,
-                email: userEmail,
-                balance: parseInt(alreadyBalance) + parseInt(addNewTransactionAmount.value),
-            }
-        })
-            .then(() => {
-                alert("Document Updated in firebase");
-                generateHistoryElements("Deposit Amount");
-                addNewTransactionForm.style.display = "none";
-                localStorage.setItem("alreadyBalance", parseInt(alreadyBalance) + parseInt(addNewTransactionAmount.value));
-                bankBalanceAmount.innerText = "Bank Balance : " + localStorage.getItem("alreadyBalance");
+        if (addNewTransactionAmount.value === "" || undefined || null || NaN) {
+            alert("Enter valid number");
+        } else {
+            const docRef = firestore.doc(`users/${userId}/user Information/${userName}`);
+            const alreadyBalance = localStorage.getItem("alreadyBalance");
+            docRef.update({
+                userInformation: {
+                    name: userName,
+                    email: userEmail,
+                    balance: parseInt(alreadyBalance) + parseInt(addNewTransactionAmount.value),
+                }
             })
-            .catch((err) => {
-                alert("Error in updating amount in firebase");
-                addNewTransactionForm.style.display = "none";
-                console.log(err);
-            });
+                .then(() => {
+                    alert("Document Updated in firebase");
+                    generateHistoryElements("Deposit Amount");
+                    addNewTransactionForm.style.display = "none";
+                    localStorage.setItem("alreadyBalance", parseInt(alreadyBalance) + parseInt(addNewTransactionAmount.value));
+                    bankBalanceAmount.innerText = "Bank Balance : " + localStorage.getItem("alreadyBalance");
+                })
+                .catch((err) => {
+                    alert("Error in updating amount in firebase");
+                    addNewTransactionForm.style.display = "none";
+                    console.log(err);
+                });
+        }
     }
     function delAmountInFireBase() {
-        const docRef = firestore.doc(`users/${userId}/user Information/${userName}`);
-        const alreadyBalance = localStorage.getItem("alreadyBalance");
-        docRef.update({
-            userInformation: {
-                name: userName,
-                email: userEmail,
-                balance: parseInt(alreadyBalance) - parseInt(addNewTransactionAmount.value),
-            }
-        })
-            .then(() => {
-                alert("Document Updated in firebase");
-                generateHistoryElements("Widraw Amount");
-                addNewTransactionForm.style.display = "none";
-                localStorage.setItem("alreadyBalance", parseInt(alreadyBalance) - parseInt(addNewTransactionAmount.value));
-                bankBalanceAmount.innerText = "Bank Balance : " + localStorage.getItem("alreadyBalance");
+        if (addNewTransactionAmount.value === "" || undefined || null || NaN) {
+            alert("Enter valid number");
+        } else {
+            const docRef = firestore.doc(`users/${userId}/user Information/${userName}`);
+            const alreadyBalance = localStorage.getItem("alreadyBalance");
+            docRef.update({
+                userInformation: {
+                    name: userName,
+                    email: userEmail,
+                    balance: parseInt(alreadyBalance) - parseInt(addNewTransactionAmount.value),
+                }
             })
-            .catch((err) => {
-                alert("Error in updating amount in firebase");
-                addNewTransactionForm.style.display = "none";
-                console.log(err);
-            });
+                .then(() => {
+                    alert("Document Updated in firebase");
+                    generateHistoryElements("Widraw Amount");
+                    addNewTransactionForm.style.display = "none";
+                    localStorage.setItem("alreadyBalance", parseInt(alreadyBalance) - parseInt(addNewTransactionAmount.value));
+                    bankBalanceAmount.innerText = "Bank Balance : " + localStorage.getItem("alreadyBalance");
+                })
+                .catch((err) => {
+                    alert("Error in updating amount in firebase");
+                    addNewTransactionForm.style.display = "none";
+                    console.log(err);
+                });
+        }
     }
 }());
 

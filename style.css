@@ -18,3 +18,7 @@ body{
     height: 4rem;
     width: 4rem;
 }
+
+.hide{
+    display: none;
+}
