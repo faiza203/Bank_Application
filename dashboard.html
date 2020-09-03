@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">  
+    <link rel="stylesheet" href="style.css">
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
-  <title>Dash Board</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js"></script>
+    <title>Dash Board</title>
 </head>
 
 <body>
@@ -29,12 +30,12 @@
             <button class="btn btn-outline-secondary ml-3">Add New Transaction</button>
             <form id="add_new_transaction_form" style="display: none;">
                 <div class="form-group">
-                    <input type="number" class="form-control m-2" id="amount" placeholder="Enter amount..." />
+                    <input type="number" class="form-control m-2" id="amount" placeholder="Enter amount..." required />
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-outline-success ml-2" id="addTransaction" type="submit">Add</button>
-                    <button class="btn btn-outline-danger" id="delTransaction" type="submit">Del</button>
-                    <button class="btn btn-outline-primary" id="cancleTransaction" type="button">Cancle</button>
+                    <button class="btn btn-outline-success ml-2" id="add_transaction" type="submit">Add</button>
+                    <button class="btn btn-outline-danger" id="del_transaction" type="submit">Del</button>
+                    <button class="btn btn-outline-primary" id="cancle_transaction" type="button">Cancle</button>
                 </div>
         </div>
 
@@ -42,5 +43,6 @@
     </div>
     </div>
 </body>
-  <script src="transaction.js"></script>
+<script src="transaction.js"></script>
+
 </html>

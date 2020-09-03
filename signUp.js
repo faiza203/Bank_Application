@@ -8,7 +8,6 @@ const registerPassword = document.getElementById("register_password");
 const registerConfirmPassword = document.getElementById("register_confirm_password");
 const registerSubmitBtn = document.getElementById("register_submit_btn");
 
-
 // Initialize Firebase
 (function () {
     const config = {
@@ -32,23 +31,16 @@ const registerSubmitBtn = document.getElementById("register_submit_btn");
             const promise = auth.createUserWithEmailAndPassword(registerEmail.value, registerPassword.value)
             promise.then(function ({ user }) {
                 const userId = { user }.user.u.src.uid;
-                localStorage.setItem("userId" , userId)
-                const userInformation = {
-                    userName: loginUserName.value,
-                    email: loginEmail.value,
-                    balance: 0
-                }
-                sendToFirestore(userId, userInformation)
-                stopLoading();
-                    window.location.href = "index.html";
-                stopLoading();
-            });
-            promise.catch(function (err) {
-                alert(err.message);
+                localStorage.setItem("userId", userId)
+                window.location.href = "index.html";
                 stopLoading();
             })
+                .catch(function (err) {
+                    alert(err.message);
+                    stopLoading();
+                })
         } else {
-            alert("Password does not matched")
+            alert("Password does not matched");
             stopLoading();
         }
     })
@@ -58,6 +50,7 @@ function startLoading() {
     loadingDiv.style.display = "block";
     contentDiv.style.display = "none";
 }
+
 function stopLoading() {
     loadingDiv.style.display = "none";
     contentDiv.style.display = "block";

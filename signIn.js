@@ -32,11 +32,15 @@ const registerPageBtn = document.getElementById("register_page_btn");
         const promise = auth.signInWithEmailAndPassword(loginEmail.value, loginPassword.value)
         promise.then(function ({ user }) {
             const userId = { user }.user.u.src.uid;
-            localStorage.setItem("userId" , userId)
+            const userName = loginUserName.value;
+            const userEmail = loginEmail.value;
+            localStorage.setItem("userEmail" , userEmail);
+            localStorage.setItem("userName" , userName);
+            localStorage.setItem("userId" , userId);
             const userInformation = {
                 userName: loginUserName.value,
                 email: loginEmail.value,
-                balance : "",
+                balance : 0,
             }
             sendToFirestore(userId, userInformation)
             stopLoading();
@@ -56,8 +60,8 @@ const registerPageBtn = document.getElementById("register_page_btn");
                 userInformation,
             })
             .then(() => {
-                stopLoading();
                 window.location.href = "dashboard.html";
+                stopLoading();
             })
             .catch((err) => {
                 alert("Got an error !!!");
