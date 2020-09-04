@@ -1,4 +1,3 @@
-
 // Initialize Firebase
 (function () {
     const config = {
@@ -13,7 +12,9 @@
     };
     firebase.initializeApp(config);
     firebase.analytics();
+
     const firestore = firebase.firestore();
+    startLoading();
     firestore
         .collection("users")
         .doc(userId)
@@ -24,11 +25,16 @@
             const { userInformation } = await querySnapshot.data();
             localStorage.setItem("alreadyBalance", { userInformation }.userInformation.balance);
             bankBalanceAmount.innerText = "Bank Balance : " + localStorage.getItem("alreadyBalance");
+            stopLoading();
         })
         .catch((err) => {
             alert(err.message);
             console.log(err);
+            stopLoading();
         });
+
+    startLoading();
+
     firestore
         .collection("users")
         .doc(userId)
@@ -44,14 +50,17 @@
                 var time = new Date(null);
                 time.setTime(timeInSec * 1000);
                 generateHistoryElements(beforeTransaction, afterTransaction, transactionAmount, time);
+                stopLoading();
             });
         }).catch((err) => {
             alert(err.message);
             console.log(err);
+            stopLoading();
         });
 
 
     function sendToFirestore(beforeTransaction, afterTransaction, amount, time) {
+        startLoading();
         const transactionHistory = {
             beforeTransaction: beforeTransaction,
             afterTransaction: afterTransaction,
@@ -64,19 +73,22 @@
                 transactionHistory,
             })
             .then(() => {
-                alert("Send to firebase")
+                stopLoading();
             })
             .catch((err) => {
                 alert("Got an error !!!");
                 console.log(err);
+                stopLoading();
             });
     }
 
     function generateHistoryElements(beforeTransaction = localStorage.getItem("alreadyBalance"), afterTransaction, amount, time) {
+        startLoading();
         const div = document.createElement("div");
         div.id = uuid;
         div.innerHTML = `<p class="ml-3 font-weight-lighter">Before Transaction : ${beforeTransaction} , After Transaction: ${afterTransaction} ,  amount_ ${amount} , Time :${time}</p>`;
         transcationHistory.appendChild(div);
+        stopLoading();
     }
 
     addNewTransactionForm.addEventListener("submit", (e) => e.preventDefault());
@@ -86,6 +98,7 @@
         if (addNewTransactionAmount.value === "" || undefined || null || NaN) {
             alert("Enter valid number");
         } else {
+            startLoading();
             const docRef = firestore.doc(`users/${userId}/user Information/${userName}`);
             const alreadyBalance = localStorage.getItem("alreadyBalance");
             docRef.update({
@@ -96,17 +109,18 @@
                 }
             })
                 .then(() => {
-                    alert("Document Updated in firebase");
                     generateHistoryElements(parseInt(alreadyBalance), parseInt(alreadyBalance) + parseInt(addNewTransactionAmount.value), parseInt(addNewTransactionAmount.value), new Date());
                     sendToFirestore(parseInt(alreadyBalance), parseInt(alreadyBalance) + parseInt(addNewTransactionAmount.value), parseInt(addNewTransactionAmount.value), new Date());
                     addNewTransactionForm.style.display = "none";
                     localStorage.setItem("alreadyBalance", parseInt(alreadyBalance) + parseInt(addNewTransactionAmount.value));
                     bankBalanceAmount.innerText = "Bank Balance : " + localStorage.getItem("alreadyBalance");
+                    stopLoading();
                 })
                 .catch((err) => {
                     alert("Error in updating amount in firebase");
                     addNewTransactionForm.style.display = "none";
                     console.log(err);
+                    stopLoading();
                 });
         }
     }
@@ -114,6 +128,7 @@
         if (addNewTransactionAmount.value === "" || undefined || null || NaN) {
             alert("Enter valid number");
         } else {
+            startLoading();
             const docRef = firestore.doc(`users/${userId}/user Information/${userName}`);
             const alreadyBalance = localStorage.getItem("alreadyBalance");
             docRef.update({
@@ -124,17 +139,18 @@
                 }
             })
                 .then(() => {
-                    alert("Document Updated in firebase");
                     generateHistoryElements(parseInt(alreadyBalance), parseInt(alreadyBalance) - parseInt(addNewTransactionAmount.value), parseInt(addNewTransactionAmount.value), new Date());
                     sendToFirestore(parseInt(alreadyBalance), parseInt(alreadyBalance) - parseInt(addNewTransactionAmount.value), parseInt(addNewTransactionAmount.value), new Date());
                     addNewTransactionForm.style.display = "none";
                     localStorage.setItem("alreadyBalance", parseInt(alreadyBalance) - parseInt(addNewTransactionAmount.value));
                     bankBalanceAmount.innerText = "Bank Balance : " + localStorage.getItem("alreadyBalance");
+                    stopLoading();
                 })
                 .catch((err) => {
                     alert("Error in updating amount in firebase");
                     addNewTransactionForm.style.display = "none";
                     console.log(err);
+                    stopLoading();
                 });
         }
     }
