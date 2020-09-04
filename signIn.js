@@ -54,7 +54,7 @@ const registerPageBtn = document.getElementById("register_page_btn");
         })
     })
     function sendToFirestore(userId, userInformation) {
-        const doc = firestore.doc(`users/${userId}/${userInformation.userName}/user Information`);
+        const doc = firestore.doc(`users/${userId}/user Information/${userInformation.userName}`);
         doc
             .set({
                 userInformation,
