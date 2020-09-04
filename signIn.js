@@ -34,20 +34,20 @@ const registerPageBtn = document.getElementById("register_page_btn");
             const userId = { user }.user.u.src.uid;
             const userName = loginUserName.value;
             const userEmail = loginEmail.value;
-            localStorage.setItem("userEmail" , userEmail);
-            localStorage.setItem("userName" , userName);
-            localStorage.setItem("userId" , userId);
+            localStorage.setItem("userEmail", userEmail);
+            localStorage.setItem("userName", userName);
+            localStorage.setItem("userId", userId);
             const userInformation = {
                 userName: loginUserName.value,
                 email: loginEmail.value,
-                balance : 0,
+                balance: 0,
             }
             sendToFirestore(userId, userInformation)
             stopLoading();
 
         });
 
-        
+
         promise.catch(function (err) {
             alert(err.message);
             stopLoading();
@@ -84,4 +84,4 @@ function stopLoading() {
     loadingDiv.style.display = "none";
     contentDiv.style.display = "block";
 }
- 
+
